@@ -1,0 +1,1480 @@
+
+#: import sm kivy.uix.screenmanager
+ScreenManagement:
+	transition: sm.FadeTransition()
+	WelcomeScreen:
+		name: 'welcome'
+		Button:
+			on_release: app.root.current = 'login'
+			background_normal: 'images/welcomescreen.png'
+			background_down: 'images/welcomescreen.png'
+			font_size: 20
+		Image:
+			source: 'images/iconspin.zip'
+			anim_delay: 1/10
+			pos_hint:{'x': -0.2 ,'y': .19}
+	LoginScreen:
+		id: login
+		txt_username: patientUser	
+		txt_password: patientPass
+		name: 'login'
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/loginscreen.png"
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 20
+			padding: 50
+			FloatLayout:
+				TextInput:
+					id: patientUser
+					hint_text:'Patient Username'
+					focus: False
+					font_size:15
+					size_hint: None, None
+					pos_hint: {"x": 0.41, "y": .51}
+					size: '170dp', '32dp'
+					background_normal: 'images/white.png'
+					background_active: 'images/white.png'
+					input_filter: lambda text, from_undo: text[:15- len(self.text)]
+					multiline: False
+				TextInput:
+		    		id: patientPass
+				    hint_text:'Patient Password'
+				    focus:False
+				    password: True
+				    font_size:15
+				    size_hint: None, None
+					pos_hint: {"x": 0.41, "y": .37}
+					size: '170dp', '32dp'
+					background_normal: 'images/white.png'
+					background_active: 'images/white.png'
+					input_filter: lambda text, from_undo: text[:15 - len(self.text)]
+					multiline: False
+				Button:
+					id: btnLogin
+					font_size:30
+					background_normal: 'images/btnlogin.png'
+					background_down: 'images/pbtnlogin.png'
+					on_press: login.patient_login(patientUser.text,patientPass.text);patientinfoscreen.patient_info(patientUser.text);patientrecordscreen.displayInfo(patientUser.text)
+					size_hint: None, None
+					size: '150dp', '50dp'
+					pos_hint: {"x": 0.29,"y":0.15}
+				Button:
+					id: btnSignup
+					font_size:30
+					background_normal: 'images/btnsignup.png'
+					background_down: 'images/pbtnsignup.png'
+					on_press: app.root.current = 'signup'
+					size_hint: None, None
+					size: '300dp', '50dp'
+					pos_hint: {"x": 0.29,"y": 0.009}
+				Button:
+					id:btnAdminLogin
+					background_normal: 'images/btnadminlogin.png'
+					background_down: 'images/pbtnadminlogin.png'
+					on_release: app.root.current = 'adminlogin'
+					size_hint: None, None
+					size: '150dp', '50dp'
+					pos_hint: {"x": 0.505,"y":0.15}
+	AdminLoginScreen:
+		id: adminlogin
+		name: 'adminlogin'
+		txt_adminusername: adminUser	
+		txt_adminpassword: adminPass
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/adminloginscreen.png"
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 20
+			padding: 50
+			FloatLayout:
+				TextInput:
+					id: adminUser
+					hint_text:'Admin Username'
+					focus: False
+					font_size:15
+					size_hint: None, None
+					pos_hint: {"x": 0.41, "y": .51}
+					size: '160dp', '32dp'
+					background_normal: 'images/white.png'
+					background_active: 'images/white.png'
+					input_filter: lambda text, from_undo: text[:15- len(self.text)]
+					multiline: False
+				TextInput:
+		    		id: adminPass
+				    hint_text:'Admin Password'
+				    focus:False
+				    password: True
+				    font_size:15
+				    size_hint: None, None
+					pos_hint: {"x": 0.41, "y": .37}
+					size: '160dp', '32dp'
+					background_normal: 'images/white.png'
+					background_active: 'images/white.png'
+					input_filter: lambda text, from_undo: text[:15 - len(self.text)]
+				Button:
+					id: btnAdminLogin
+					font_size:30
+					background_normal: 'images/abtnlogin.png'
+					background_down: 'images/apbtnlogin.png'
+					on_press: adminlogin.admin_login(adminUser.text,adminPass.text)
+					size_hint: None, None
+					size: '300dp', '50dp'
+					pos_hint: {"x": 0.29,"y":0.15}
+				Button:
+					id: abtnBack
+					font_size:30
+					background_normal: 'images/backbtn.png'
+					background_down: 'images/pbackbtn.png'
+					on_press: app.root.current = 'login'
+					size_hint: None, None
+					size: '300dp', '50dp'
+					pos_hint: {"x": 0.29,"y": 0.009}
+	AdminMainScreen:
+		id: adminmain
+		name: 'adminmain'
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/adminmainscreen.png"
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 20
+			padding: 50
+			FloatLayout:
+				Button:
+					id: ambtnPatientInfo
+					background_normal: 'images/MAIN/patient.png'
+					background_down: 'images/MAIN/patient.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.08,"y":0.70}
+					on_press: app.root.current = 'adminpatientrecord';adminpatientrecord.displayRecordAdmin()
+				Button:
+					id: ambtnPatientRecord
+					background_normal: 'images/MAIN/record.png'
+					background_down: 'images/MAIN/record.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.625,"y":0.70}
+					on_press: app.root.current = 'admindiagnosisrecord';admindiagnosisrecord.displayDiagRecordAdmin()
+				Button:
+					id: ambtnGuidelines
+					background_normal: 'images/MAIN/guidelines.png'
+					background_down: 'images/MAIN/guidelines.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.08,"y":0.1}
+					on_press: app.root.current = 'adminguide'
+				Button:
+					id: ambtnLogout
+					background_normal: 'images/MAIN/logout.png'
+					background_down: 'images/MAIN/logout.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.625,"y":0.1}
+					on_press: app.root.current ='adminlogin';
+	AdminPatientRecordScreen:
+		id: adminpatientrecord
+		name: 'adminpatientrecord'
+		scrollview2: scrollview2
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/adminpatientinforecord.png"
+		Button:
+			id: patientinfoback
+			size_hint: None, None
+			size: '100', '56dp'
+			background_normal: 'images/back1.png'
+			background_down: 'images/back2.png'
+			pos_hint: {"x": 0, "top": 1.01}
+			on_release: app.root.current = 'adminmain'
+		FloatLayout:
+			TextInput:
+				id: searchpatientinforecord
+				hint_text:'Search patient diagnosis record here'
+				focus: False
+				font_size:15
+				size_hint: None, None
+				pos_hint: {"x": 0.115, "y": 0.766}
+				size: '500dp', '30dp'
+				background_normal: 'images/white.png'
+				background_active: 'images/white.png'
+				input_filter: lambda text, from_undo: text[:15- len(self.text)]
+				on_text:adminpatientrecord.searchPatientInfoRecord(self.text)
+				multiline: False
+		BoxLayout:
+			orientation: 'vertical'
+			FloatLayout:
+				Label:	
+					text: 'Username'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.37,"y": -0.0525}
+				Label:	
+					text: 'First Name'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.19,"y": -0.0525}
+				Label:	
+					text: 'Last Name'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.02,"y": -0.0525}
+				Label:	
+					text: 'Age'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.16,"y": -0.0525}
+				Label:	
+					text: 'Contact Number'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.34,"y": -0.0525}
+			FloatLayout:
+				ScrollableContainer2:
+					id: scrollview2
+					size: root.size
+					pos_hint: {"x": -0.01, "y": 0.45}
+					scroll_timeout: 75
+					scroll_distance: 5
+					app: app
+					content_layout2:content_layout2
+					GridLayout:
+						id: content_layout2
+						cols: 1
+						size_hint: (1.0, None)
+						pos: root.pos
+						height: self.minimum_height
+						padding: 25
+						spacing: 28
+	AdminRecordScreen:
+		id: admindiagnosisrecord
+		name:'admindiagnosisrecord'
+		scrollview3: scrollview3
+		searchpatientdiagnosisrecord:searchpatientdiagnosisrecord
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/admindiagnosisrecord.png"
+		Button:
+			id: patientrecordback
+			size_hint: None, None
+			size: '100dp', '56dp'
+			background_normal: 'images/back1.png'
+			background_down: 'images/back2.png'
+			pos_hint: {"x": 0, "top": 1.01}
+			on_release: app.root.current = 'adminmain'
+		FloatLayout:
+			TextInput:
+				id: searchpatientdiagnosisrecord
+				hint_text:'Search patient diagnosis record here'
+				focus: False
+				font_size:15
+				size_hint: None, None
+				pos_hint: {"x": 0.11, "y": 0.768}
+				size: '500dp', '32dp'
+				background_normal: 'images/white.png'
+				background_active: 'images/white.png'
+				input_filter: lambda text, from_undo: text[:15- len(self.text)]
+				on_text:admindiagnosisrecord.searchDiagnosisRecord(self.text)
+				multiline: False
+		BoxLayout:
+			orientation: 'vertical'
+			FloatLayout:
+				Label:	
+					text: 'Patient Username'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.35,"y": -0.0525}
+				Label:	
+					text: 'Tooth Name & No.'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.12,"y": -0.0525}
+				Label:	
+					text: 'Diagnosis'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.08,"y": -0.0525}
+				Label:	
+					text: 'Date and Time'
+					font_size: 18
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.32,"y": -0.0525}
+				Button:
+					id: countnormal
+					size_hint: None, None
+					size: '140dp', '40dp'
+					background_normal: 'images/countnormal.png'
+					background_down: 'images/countnormal.png'
+					on_press: admindiagnosisrecord.countnormal()
+					pos_hint: {"x": 0.12, "y": -0.90}
+				Button:
+					id: countmoderate
+					size_hint: None, None
+					size: '140dp', '40dp'
+					background_normal: 'images/countmoderate.png'
+					background_down: 'images/countmoderate.png'
+					on_press: admindiagnosisrecord.countmoderate()
+					pos_hint: {"x": 0.40, "y": -0.90}
+				Button:
+					id: countmoderate
+					size_hint: None, None
+					size: '140dp', '40dp'
+					background_normal: 'images/countsevere.png'
+					background_down: 'images/countsevere.png'
+					on_press: admindiagnosisrecord.countsevere()
+					pos_hint: {"x": 0.67, "y": -0.90}
+			FloatLayout:
+				ScrollableContainer3:
+					id: scrollview3
+					size: root.size
+					pos_hint: {"x": -0.05, "y": 0.45}
+					scroll_timeout: 55
+					scroll_distance: 10
+					app: app
+					content_layout3:content_layout3
+					GridLayout:
+						id: content_layout3
+						cols: 1
+						size_hint: (1.0, None)
+						pos: root.pos
+						height: self.minimum_height
+						padding: 25
+						spacing: 28
+	AdminGuideScreen:
+		id:adminguide
+		name:'adminguide'
+		canvas.before:
+			Rectangle:	
+				size: self.size
+		BoxLayout:
+			orientation: 'vertical'
+			Carousel:
+				direction: 'right'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag1.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag2.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag3.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag4.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag5.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag6.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag7.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag8.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'adminguide/ag9.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100', '56'
+						pos_hint: {"x": 0.0,"y":0.89}
+						on_release: app.root.current = 'adminmain'
+	SignupScreen:
+		id: signup
+		name: 'signup'
+		txt_firstname:firstName
+		txt_lastname:lastName
+		txt_address:address
+		txt_gender:gender
+		txt_patientUsername:patientUsername
+		txt_contact:patientcontact
+		txt_patientage:patient_age
+		txt_patientpass:patientpass
+		txt_repatientpass:patientpass_retype
+		txt_checkup:checkup
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/signupscreen.png"
+		BoxLayout:
+			orientation: 'vertical'
+			GridLayout
+				cols:1
+				rows:7
+				row_default_height: 35
+				row_force_default:True
+				spacing: 20
+				padding: 80, 100
+				FloatLayout:
+					TextInput:
+						id: firstName
+						color: 7, 9, 2, 0.2
+						hint_text:'First Name'
+						focus: False
+						font_size:12
+						background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						size_hint: None, None
+						size: '250dp', '30dp'
+						pos_hint: {"x": 0.025, "y": -0.65}	
+						multiline: False
+					TextInput:
+						id: lastName
+						color: 7, 9, 2, 0.2
+						hint_text:'Last Name'
+						focus:False
+						font_size:12
+						background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						size_hint: None, None
+						size: '250dp', '30dp'
+						pos_hint: {"x": 0.52, "y": -0.65}
+						multiline: False
+					TextInput:
+		    			id: address
+		    			color: 7, 9, 2, 0.2
+		    			hint_text:'Address'
+		    			focus:False	
+		    			font_size:12
+		    			size_hint: None, None
+		    			background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+		    			pos_hint: {"x": 0.025 , "y": -2}
+		    			size: '430dp', '30dp'
+		    			multiline: False
+		    		Spinner:
+		    			id: gender
+		    			text:"Gender"
+		    			values:["Male", "Female"]
+		    			size: '75dp', '32dp'
+		    			size_hint: None, None
+		    			pos_hint: {"x": 0.85,"y":-2}
+		    			background_color: (1, 0.105, 0.102, 1)
+					TextInput:
+		    			id: patientUsername
+		    			color: 7, 9, 2, 0.2
+		    			hint_text:'Username'
+		    			focus:False
+		    			font_size:15
+		    			size_hint: None, None
+		    			pos_hint: {"x": 0.025,"y":-3.3}
+		    			size: '280dp', '32dp'
+		    			background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						multiline: False
+					TextInput:
+		    			id: patientcontact
+		    			color: 7, 9, 2, 0.2
+		    			hint_text:'Contact Number'
+		    			focus:False
+		    			font_size:15
+		    			pos_hint: {"x": 0.52,"y":-3.3}
+		    			size_hint: None, None
+		    			size: '280dp', '32dp'
+		    			background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						multiline: False
+						input_filter:'int'
+					TextInput:
+		    			id:patient_age
+		    			size_hint: None, None
+		    			size: '35dp', '32dp'
+		    			hint_text: 'Age'
+		    			focus: False
+		    			font_size:12
+		    			pos_hint: {"x": 0.7525,"y":-2}
+		    			background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						multiline: False
+						input_filter:'int'
+					TextInput:
+						id: patientpass
+						color: 7, 9, 2, 0.2
+						hint_text:'Password'
+						focus:False
+						font_size:15
+						pos_hint: {"x": 0.025,"y":-4.65}
+						password: True
+						size_hint: None, None
+						size: '280dp', '32dp'
+						background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						multiline: False
+					TextInput:
+		    			id: patientpass_retype
+		    			color: 7, 9, 2, 0.2
+		    			hint_text:'Re-type Password'
+		    			focus:False
+		    			font_size:15
+		    			pos_hint: {"x": 0.52,"y":-4.65}
+		    			password: True
+		    			size_hint: None, None
+		    			size: '280dp', '32dp'
+		    			background_normal: 'images/white.png'
+						background_active: 'images/white.png'
+						multiline: False
+					Spinner: 
+		    			id: checkup
+		    			text:"Choose here..."
+		    			values:["Last week", "Last month", "Last year", "Never have been in to a dentist"]
+		    			pos_hint: {"x": 0.58,"y":-5.7}
+		    			background_color: (1, 0.105, 0.102, 1)
+		    			size: '230dp', '32dp'
+		    			size_hint: None, None
+		    			sync_height: True
+		    			height: 25
+
+		    		Button:
+						id: btnCreateAcc
+						font_size:12
+						size: 0.5, 0.5
+						size_hint: None, None
+		    			size: '200dp', '40dp'
+		    			background_normal: 'images/btnsignup.png'
+		    			background_down: 'images/pbtnsignup.png'
+						pos_hint: {"x": 0.67,"y":-8.75}
+						on_press: signup.patient_signup(firstName.text,lastName.text,address.text,patient_age.text,gender.text,patientUsername.text,patientcontact.text,patientpass.text,patientpass_retype.text,checkup.text)
+					Button:
+						id: bckLogin
+						font_size:12
+						size_hint: None, None
+		    			size: '200dp', '40dp'
+						pos_hint: {"x": 0.35,"y":-8.75}
+						background_normal: 'images/backbtn.png'
+		    			background_down: 'images/pbackbtn.png'
+		    			on_press: app.root.current = 'login'
+	MainScreen:
+		id: mainscreen
+		name: 'mainscreen'
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/mainscreen.png"
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 20
+			padding: 50
+			FloatLayout:
+				Button:
+					id: mbtnPatientInfo
+					background_normal: 'images/MAIN/patient.png'
+					background_down: 'images/MAIN/patient.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.02,"y":0.65}
+					on_press: app.root.current = 'patientinfoscreen'
+				Button:
+					id: mbtnPatientRecord
+					background_normal: 'images/MAIN/record.png'
+					background_down: 'images/MAIN/record.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.378,"y":0.65}
+					on_press: app.root.current = 'patientrecordscreen';patientrecordscreen.displayRecord()
+				Button:
+					id: mbtnDiagnose
+					background_normal: 'images/MAIN/diagnose.png'
+					background_down: 'images/MAIN/diagnose.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.73,"y":0.65}
+					on_press: app.root.current = 'diagnosescreen';diagnosescreen.dropdown()
+				Button:
+					id: mbtnGuidelines
+					background_normal: 'images/MAIN/guidelines.png'
+					background_down: 'images/MAIN/guidelines.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.02,"y":0.1}
+					on_press: app.root.current = 'guidelinescreen'
+				Button:
+					id: mbtnAboutUs
+					background_normal: 'images/MAIN/dentalchart.png'
+					background_down: 'images/MAIN/dentalchart.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.378,"y":0.1}
+					on_press: app.root.current = 'dentalchartscreen';dentalchartscreen.dropdown1()
+				Button:
+					id: mbtnLogout
+					background_normal: 'images/MAIN/logout.png'
+					background_down: 'images/MAIN/logout.png'
+					size_hint: None, None
+					size: '180dp', '120dp'
+					pos_hint: {"x": 0.73,"y":0.1}
+					on_press: app.root.current ='login';dentalchartscreen.clearChart()
+	PatientRecordScreen:
+		id:patientrecordscreen
+		name:'patientrecordscreen'
+		scrollview1: scrollview1
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/dentalrecord.png"
+		BoxLayout:
+			orientation: 'vertical'
+			FloatLayout:
+				Label:	
+					text: patientrecordscreen.patientname1
+					font_size: 22
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.30,"y": 0.187}
+				Label:	
+					text: patientrecordscreen.lastcheckup1
+					font_size: 22
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.29,"y": 0.187}
+				Label:	
+					text: 'Tooth Number'
+					font_size: 22
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.30,"y": -0.137}
+				Label:	
+					text: 'Diagnosis'
+					font_size: 22
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.01,"y": -0.137}
+				Label:	
+					text: 'Date and Time'
+					font_size: 22
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.31,"y": -0.137}
+				TextInput:
+					id: searchdentalrecord
+					hint_text:'Search patient diagnosis record here'
+					focus: False
+					font_size:15
+					size_hint: None, None
+					pos_hint: {"x": 0.45, "y": 0.45}
+					size: '400dp', '30dp'
+					background_normal: 'images/white.png'
+					background_active: 'images/white.png'
+					input_filter: lambda text, from_undo: text[:15- len(self.text)]
+					on_text:patientrecordscreen.searchDentalRecord(self.text)
+			FloatLayout:
+				ScrollableContainer1:
+					id: scrollview1
+					size: root.size
+					pos_hint: {"x": -0.09, "y": 0.35}
+					scroll_timeout: 75
+					scroll_distance: 10
+					app: app
+					content_layout1: content_layout1
+					GridLayout:
+						id: content_layout1
+						cols: 1
+						size_hint: (1.0, None)
+						pos: root.pos
+						height: self.minimum_height
+						padding: 25
+						spacing: 32
+		Button:
+			id: patientrecordback
+			size_hint: None, None
+			size: '100dp', '56dp'
+			background_normal: 'images/back1.png'
+			background_down: 'images/back2.png'
+			pos_hint: {"x": 0, "top": 1.01}
+			on_release: app.root.current = 'mainscreen'
+	PatientInfoScreen:
+		id: patientinfoscreen
+		name: 'patientinfoscreen'
+		scrollview1: scrollview1
+		canvas.before:
+			Rectangle:
+				size: self.size
+				source: "images/patientinfoscreen.png"
+		Button:
+			id: patientinfoback
+			size_hint: None, None
+			size: '100dp', '56dp'
+			background_normal: 'images/back1.png'
+			background_down: 'images/back2.png'
+			pos_hint: {"x": 0, "top": 1.01}
+			on_release: app.root.current = 'mainscreen'
+		BoxLayout:
+			orientation: "vertical"
+			FloatLayout:
+				Label:
+					text: "Name:"
+					font_size: 50
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.30,"y": -1.30}
+				Label:	
+					text: patientinfoscreen.patientname
+					font_size: 50
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.08,"y": -1.30}
+			FloatLayout:
+				Label:
+					text: "Address:"
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.15,"y": -1.50}
+
+				Label:
+					text: patientinfoscreen.address
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.15,"y": -1.50}
+			FloatLayout:	
+				Label:
+					text:"Gender:"
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.14,"y": -0.90}
+				Label:
+					text: patientinfoscreen.gender
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.15,"y": -0.90}
+			FloatLayout:
+				Label:
+					text:"Age:"
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.11,"y": -0.25}
+				Label:
+					text: patientinfoscreen.age
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.15,"y": -0.25}
+			FloatLayout:
+				Label:
+					text: "Contact Number:"
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.21,"y": 0.35}
+				Label:
+					text: patientinfoscreen.contactNum
+					font_size: 30
+					color: 0, 0, 255, 1
+					pos_hint: {"x": 0.15,"y": 0.35}
+	DiagnoseScreen:
+		id:diagnosescreen
+		name:'diagnosescreen'
+		toothnumber:toothnumber
+		canvas.before:
+			Rectangle:	
+				size: self.size
+				source: "images/diagnosescreen.png"
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 20
+			padding: 50
+			FloatLayout:
+				Image:
+					source: diagnosescreen.image
+					allow_stretch: True
+					keep_ratio: False
+					size_hint_y: None
+					size_hint_x: None
+					height: dp(272)
+					width: dp(333)
+					pos_hint: {"x": -0.0062, "y": .267}
+				Image:
+					source: diagnosescreen.diagnosisTooth
+					allow_stretch: True
+					keep_ratio: False
+					size_hint_y: None
+					size_hint_x: None
+					height: dp(272)
+					width: dp(333)
+					pos_hint: {"x": 0.528, "y": .267}
+					nocache: True
+				Button:
+					id: capture
+					background_normal: 'images/capturebtn.png'
+					background_down: 'images/capturebtn.png'
+					size_hint: None, None
+					size: '145', '44'
+					on_press: app.root.current ='camerascreen'
+					pos_hint: {"x": -0.05,"y":-0.047}
+				Button:
+					id: delete
+					background_normal: 'images/clearbtn.png'
+					background_down: 'images/clearbtn.png'
+					size_hint: None, None
+					size: '145','44'
+					pos_hint: {"x": 0.162,"y":-0.047}
+					on_release: diagnosescreen.clear()
+				Button:
+					id: save
+					background_normal: 'images/savebtn.png'
+					background_down: 'images/savebtn.png'
+					on_release: diagnosescreen.saveRecord();diagnosescreen.process2()
+					size_hint: None, None
+					size: '145', '44'
+					pos_hint: {"x": 0.38,"y":-0.047}
+				Button:
+					id: process
+					background_normal: 'images/processbtn.png'
+					background_down: 'images/processbton.png'
+					size_hint: None, None
+					size: '145', '44'
+					pos_hint: {"x": 0.6,"y":-0.047}
+					on_release: diagnosescreen.process();diagnosescreen.updateDiagnosis();diagnosescreen.refresh2();dentalchartscreen.updateChart()
+				Button:
+					id: filechoosers
+					size_hint: None, None
+					size: '145', '44'
+					background_normal: 'images/uploadbtn.png'
+					background_down: 'images/uploadbtn.png'
+					pos_hint: {"x": 0.83,"y":-0.047}
+					on_release: app.root.current = 'chooser'
+				Button:
+					id:dBckBtn
+					background_normal: 'images/back1.png'
+					background_down: 'images/back2.png'
+					size_hint: None, None
+					size: '100dp', '56dp'
+					pos_hint: {"x": -0.08,"y":0.98}
+					on_release: app.root.current = 'mainscreen'
+				Spinner:
+					id:	toothnumber
+					text:"Choose tooth number here"
+					values:["Lower Molar 1 - TN 1", "Lower Molar 2 - TN 2", "Lower Molar 3 - TN 3", "Lower Premolar 1 - TN 4", "Lower Premolar 2 - TN 5", "Lower Canine 1 - TN 6", "Lower Incisor 1 - TN 7", "Lower Incisor 2 - TN 8", "Lower Incisor 3 - TN 9", "Lower Incisor 4 - TN 10", "Lower Canine 2 - TN 11", "Lower Premolar 3 - TN 12", "Lower Premolar 4 - TN 13", "Lower Molar 4 - TN 14", "Lower Molar 5 - TN 15", "Lower Molar 6 - TN 16", "Upper Molar 1 - TN 17", "Upper Molar 2 - TN 18", "Upper Molar 3 - TN 19", "Upper Premolar 1 - TN 20", "Upper Premolar 2 - TN 21", "Upper Canine 1 - TN 22", "Upper Incisor 1- TN 23", "Upper Incisor 2- TN 24", "Upper Incisor 3 - TN 25", "Upper Incisor 4- TN 26", "Upper Canine 2 - TN 27", "Upper Premolar 3 - TN 28", "Upper Premolar 4 - TN 29", "Upper Molar 4 - TN 30", "Upper Molar 5 - TN 31", "Upper Molar 6 - TN 32"]
+					pos_hint: {"x": 0.0,"y":0.16}
+					background_color: (1, 0.105, 0.102, 1)
+					size: '200dp', '26dp'
+					size_hint: None, None
+					sync_height: True
+					height:25
+				Label:
+					text: "TN - Tooth Number"
+					font_size: 15 
+					color: 0, 0, 255, 1
+					pos_hint: {"x": -0.40,"y": -0.37}
+
+	DentalChartScreen:
+		id:dentalchartscreen
+		name:'dentalchartscreen'
+		dtoothnumber:dtoothnumber
+		canvas.before:
+			Rectangle:	
+				size: self.size
+				source: "images/dentalchartscreen.png"
+		FloatLayout:
+			Button:
+				id:dcBckBtn
+				background_normal: 'images/back1.png'
+				background_down: 'images/back2.png'
+				size_hint: None, None
+				size: '100dp', '56dp'
+				pos_hint: {"x": 0.00,"y":.88}
+				on_release: app.root.current = 'mainscreen'
+			Image:
+				source: dentalchartscreen.molar1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.155, "y": .215}
+			Image:
+				source: dentalchartscreen.molar2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.195, "y": .215}
+			Image:
+				source: dentalchartscreen.molar3
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.235, "y": .215}
+			Image:
+				source: dentalchartscreen.premolarl1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.275, "y": .215}
+			Image:
+				source: dentalchartscreen.premolarl2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.315, "y": .215}
+			Image:
+				source: dentalchartscreen.caninel1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.350, "y": .215}
+			Image:
+				source: dentalchartscreen.incisorl1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.385, "y": .215}
+			Image:
+				source: dentalchartscreen.incisorl2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.420, "y": .215}
+			Image:
+				source: dentalchartscreen.incisorl3
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.460, "y": .215}
+			Image:
+				source: dentalchartscreen.incisorl4
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.500, "y": .215}
+			Image:
+				source: dentalchartscreen.caninel2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.535, "y": .215}
+			Image:
+				source: dentalchartscreen.premolarl3
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.572,"y": .215}
+			Image:
+				source: dentalchartscreen.premolarl4
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.610,"y": .215}
+			Image:
+				source: dentalchartscreen.molar4
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.650, "y": .215}
+			Image:
+				source: dentalchartscreen.molar5
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.690, "y": .215}
+			Image:
+				source: dentalchartscreen.molar6
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.730, "y": .215}
+			Image:
+				source: dentalchartscreen.molar7
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.730, "y": .325}
+			Image:
+				source: dentalchartscreen.molar8
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.690, "y": .325}
+			Image:
+				source: dentalchartscreen.molar9
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.650, "y": .325}
+			Image:
+				source: dentalchartscreen.premolar1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.610, "y": .325}
+			Image:
+				source: dentalchartscreen.premolar2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.572, "y": .325}
+			Image:
+				source: dentalchartscreen.canine1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.535, "y": .325}
+			Image:
+				source: dentalchartscreen.incisor1
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.500, "y": .325}
+			Image:
+				source: dentalchartscreen.incisor2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.460, "y": .325}
+			Image:
+				source: dentalchartscreen.incisor3
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.420, "y": .325}
+			Image:
+				source: dentalchartscreen.incisor4
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.385, "y": .325}
+			Image:
+				source: dentalchartscreen.canine2
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.350, "y": .325}
+			Image:
+				source: dentalchartscreen.premolar3
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.315, "y": .325}
+			Image:
+				source: dentalchartscreen.premolar4
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.275, "y": .325}
+			Image:
+				source: dentalchartscreen.molar10
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.235, "y": .325}
+			Image:
+				source: dentalchartscreen.molar11
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.195, "y": .325}
+			Image:
+				source: dentalchartscreen.molar12
+				keep_ratio: True
+				size_hint_y: None
+				size_hint_x: None
+				pos_hint: {"x": 0.155, "y": .325}
+			Spinner:
+				id:	dtoothnumber
+				text:"Choose missing tooth here"
+				values:["Lower Molar 1 - TN 1", "Lower Molar 2 - TN 2", "Lower Molar 3 - TN 3", "Lower Premolar 1 - TN 4", "Lower Premolar 2 - TN 5", "Lower Canine 1 - TN 6", "Lower Incisor 1 - TN 7", "Lower Incisor 2 - TN 8", "Lower Incisor 3 - TN 9", "Lower Incisor 4 - TN 10", "Lower Canine 2 - TN 11", "Lower Premolar 3 - TN 12", "Lower Premolar 4 - TN 13", "Lower Molar 4 - TN 14", "Lower Molar 5 - TN 15", "Lower Molar 6 - TN 16", "Upper Molar 1 - TN 17", "Upper Molar 2 - TN 18", "Upper Molar 3 - TN 19", "Upper Premolar 1 - TN 20", "Upper Premolar 2 - TN 21", "Upper Canine 1 - TN 22", "Upper Incisor 1- TN 23", "Upper Incisor 2 - TN 24", "Upper Incisor 3 - TN 25", "Upper Incisor 4 - TN 26", "Upper Canine 2 - TN 27", "Upper Premolar 3 - TN 28", "Upper Premolar 4 - TN 29", "Upper Molar 4 - TN 30", "Upper Molar 5 - TN 31", "Upper Molar 6 - TN 32"]
+				pos_hint: {"x": 0.25,"y":0.15}
+				background_color: (1, 0.105, 0.102, 1)
+				size: '200dp', '25dp'
+				size_hint: None, None
+				sync_height: True
+				height:20
+			Label:
+				text: "TN - Tooth Number"
+				font_size: 15 
+				color: 0, 0, 255, 1
+				pos_hint: {"x": -0.16,"y": -0.37}
+			Button:
+				id: missingtooth
+				background_normal: 'images/btnmiss.png'
+				background_down: 'images/btnmiss.png'
+				size_hint: None, None
+				size: '150', '50'
+				pos_hint: {"x": 0.55,"y":0.05}
+				on_release:dentalchartscreen.missingtooth()
+			Button:
+				id: cleartooth
+				background_normal: 'images/clear.png'
+				background_down: 'images/clear.png'
+				size_hint: None, None
+				size: '150', '50'
+				pos_hint: {"x": 0.75,"y":0.05}
+				on_release:dentalchartscreen.cleartooth()		
+	CameraScreen:
+		id:camerascreen
+		name:'camerascreen'
+		camera_kivy:qrcam
+		FloatLayout:
+			Label:
+				height: 40
+				size_hint_y: None
+				text: 'Initraoral Camera'
+			KivyCamera:
+				id: qrcam
+				resolution: (1280, 1080)
+				size_hint: None, None
+				size: '800', '400'
+				pos_hint: {"x": 0.0,"y":0.13}
+			FloatLayout:
+				Button:
+					id: butt_start
+					size_hint: None, None
+					size: '400', '50'
+					pos_hint: {"x": 0.0,"y":0.00}
+					background_normal: 'images/Camera.png'
+					background_down: 'images/Camera.png'
+					on_press: camerascreen.dostart()
+				Button:
+					id: butt_exit
+					background_normal: 'images/takeaphoto.png'
+					background_down: 'images/takeaphoto.png'
+					size_hint: None, None
+					size: '400', '50'
+					pos_hint: {"x": 0.5,"y":0.00}
+					on_press: camerascreen.doexit();diagnosescreen.updateToothChange();app.root.current ='diagnosescreen'
+	Chooser:
+		id:chooser 
+		name:'chooser'
+		BoxLayout:
+			orientation:'horizontal'
+			FileChooserListView:
+				id: filechooser
+				on_selection: chooser.selected(filechooser.selection)
+			FloatLayout:	
+				Button:
+					pos_hint: {"x": 0,"y":0.36}
+					size_hint: 1,0.3
+					background_normal: 'images/Choose.png'
+					background_down: 'images/Choose.png'
+					on_release: app.root.current = 'diagnosescreen'; diagnosescreen.refresh()
+	AboutUsScreen:
+		id:aboutusscreen
+		name:'aboutusscreen'
+		canvas.before:
+			Rectangle:	
+				size: self.size
+				source: "images/Main/dentalchart.png"
+		BoxLayout:
+			orientation: 'vertical'
+			spacing: 20
+			padding: 50
+			FloatLayout:
+				Button:
+					id:aBckBtn
+					background_normal: 'images/backybtn.png'
+					background_down: 'images/backybtn.png'
+					size_hint: None, None
+					size: '70', '30'
+					pos_hint: {"x": -0.05,"y":0.8}
+					on_release: app.root.current = 'mainscreen'
+	GuidelineScreen:
+		id: guidelinescreen
+		name: 'guidelinescreen'	
+		canvas.before:
+			Rectangle:	
+				size: self.size
+		BoxLayout:
+			orientation: 'vertical'
+			Carousel:
+				direction: 'right'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g1.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g1-1.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g2.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g3.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g4.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g5.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g6.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g7.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g8.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g9.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g10.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g11.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g12.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g13.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
+				FloatLayout:
+					orientation: 'vertical'
+					Image:
+						source: 'userguide/g14.png' 
+						size_hint: None, None
+						size: '800', '480'
+					Button:
+						id:gBckBtn1
+						background_normal: 'images/back1.png'
+						background_down: 'images/back2.png'
+						size_hint: None, None
+						size: '100dp', '56dp'
+						pos_hint: {"x": 0.0,"y":0.88}
+						on_release: app.root.current = 'mainscreen'
